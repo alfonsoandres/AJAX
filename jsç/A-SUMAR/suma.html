@@ -1,0 +1,84 @@
+<html>
+ 
+<head>
+ 
+<title>Ejemplo sencillo de AJAX</title>
+ 
+ 
+</head>
+ 
+<body>
+ 
+Introduce valor 1
+ 
+<input type="text" id="valor1" value="0"> 
+ 
+ 
+Introduce valor 2
+ 
+<input type="text" id="valor2" value="0">
+
+<br/>
+
+<br/>
+ 
+Realiza suma
+ 
+<input type="button" id="calcula" value="Calcula">
+<br/>
+ 
+<br/>
+ 
+Resultado: <span id="resultado">0</span>
+<script type="Text/javascript">
+
+var xhr;
+var btncalcula
+var cjvalor1;
+var cjvalor2;
+var sresultado;
+
+function enviarpeticion(evento) {
+alert("Entrando en peticion Ajax");
+
+			
+				if (cjvalor1.value !='' && cjvalor2.value != ''){
+					cjvalor1.disabled = true;
+					cjvalor2.disabled = true;
+					xhr = new XMLHttpRequest();
+					xhr.addEventListener('readystatechange', gestionarRespuesta, false);
+					xhr.open('POST', 'asumar.php', true);
+					xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+					xhr.send('valorCaja1=' + cjvalor1.value + '&valorCaja2=' + cjvalor2.value);
+				}				
+			
+}
+
+function gestionarRespuesta(evento) {
+				if (evento.target.readyState == 4 && evento.target.status == 200) {
+					cjvalor1.disabled = false;
+					cjvalor2.disabled = false;
+					alert(evento.target.responseText);
+					sresultado.innerHTML = evento.target.responseText;
+				}
+}
+
+
+function inicio(){
+btncalcula=document.getElementById('calcula');
+cjvalor1=document.getElementById('valor1');
+cjvalor2=document.getElementById('valor2');
+sresultado=document.getElementById('resultado');
+cjvalor1.value="";
+cjvalor2.value="";
+
+btncalcula.addEventListener("click",enviarpeticion, false);
+
+}
+
+document.addEventListener("DOMContentLoaded",inicio, false);
+</script>
+ 
+</body>
+ 
+</html>

@@ -1,0 +1,127 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@alfonsoandres 
+suarezEsla
+/
+Ajax-Basico
+Public
+Fork your own copy of suarezEsla/Ajax-Basico
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security
+Insights
+Ajax-Basico/Ejercicio 10BIS Ajax JSON/Solucion Esla/index.html
+@suarezEsla
+suarezEsla Update
+Latest commit 7a8643b on May 26, 2022
+ History
+ 1 contributor
+127 lines (98 sloc)  3.38 KB
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <title>Ejercicio 10 BIS Esla Suárez</title>
+</head>
+
+<body>
+ 
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="typing-demo">
+                AWS Group Politics
+            </div>
+        </div>
+        <div class="section">
+            <button class="btn cyan lighten-1" id="boton">Obtener Json</button>
+
+
+
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>Effect</th>
+                        <th>Action</th>
+                        <th>Resource</th>
+                    </tr>
+                </thead>
+                <tbody id="res">
+
+                </tbody>
+            </table>
+        </div>
+        <footer class="page-footer cyan lighten-1">
+            <div class="container">
+                © 2022 Esla Suárez Arquero
+                <a class="grey-text text-lighten-4 right" href="https://github.com/suarezEsla">GitHub</a>
+            </div>
+        </footer>
+    </div>
+
+
+
+    <script>
+        document.querySelector('#boton').addEventListener('click', traerDatos)
+
+        function traerDatos() {
+
+            const xhttp = new XMLHttpRequest()
+            xhttp.open('GET', 'json.json', true)
+            xhttp.send()
+            xhttp.onreadystatechange = function() {
+
+                if (this.readyState == 4 && this.status == 200) {
+
+                    // console.log(this.responseText)
+
+                    //Convierte el contenido del archivo json en un array de objetos (datos)
+                    let datos = JSON.parse(this.responseText)
+                    console.log(datos)
+
+                    let res = document.querySelector('#res')
+                    res.innerHTML = ''
+
+
+                    //Recorremos cada uno de los objetos que hay dentro del array y los llamamos item
+                    for (let item of datos) {
+                        console.log(item.Effect)
+                        res.innerHTML += `
+                <tr>
+                <td>${item.Effect}</td>
+                <td>${item.Action}</td>
+                <td>${item.Resource}</td>
+                </tr> 
+                `
+                    }
+                }
+            }
+
+
+
+
+
+        }
+    </script>
+</body>
+
+</html>

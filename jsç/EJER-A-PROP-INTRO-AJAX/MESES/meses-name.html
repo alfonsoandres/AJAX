@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<HTML>
+<head><meta charset="utf-8">
+<title>Obteniendo meses</title>
+</head>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        //Definir variables que referencien cada uno de los objetos del archivo html.
+        let valor = document.querySelector('#valor');
+        let boton = document.querySelector('#boton');
+
+        //Definir el oyente de evento necesario para que cada vez que se teclea un carácter en la caja de texto de entrada de datos se inicie el proceso necesario para solicitar al servidor “datos.php” la coincidencia o no con los datos disponibles en el servidor. 
+        boton.addEventListener('click', function () {
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function () {
+
+                if (this.readyState == 4 && this.status == 200) {
+                    resultado.innerHTML = this.responseText; //Update resultado span with responseText from server 
+                }
+
+            };
+
+            // Open and send the request 
+            xhr.open("GET",`meses.php?num=${valor.value}`, true);
+           // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send();
+
+        });
+    });  
+</script>
+<body>
+<input type="text" id="valor" value="">
+<input type="button" id="boton" value="consultar">
+<div id="resultado"></div>
+</body>
+</html>

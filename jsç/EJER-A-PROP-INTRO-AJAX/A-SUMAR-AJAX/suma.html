@@ -1,0 +1,64 @@
+<html>
+
+<head>
+
+    <title>Ejemplo sencillo de AJAX</title>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            //Definir variables que referencien cada uno de los objetos del archivo html.
+            let valor1 = document.querySelector('#valor1');
+            let valor2 = document.querySelector('#valor2');
+            let calcula = document.querySelector('#calcula');
+            
+            //Definir el oyente de evento necesario para que cada vez que se teclea un carácter en la caja de texto de entrada de datos se inicie el proceso necesario para solicitar al servidor “datos.php” la coincidencia o no con los datos disponibles en el servidor. 
+            calcula.addEventListener('click', function () {
+                var xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function () {
+
+                    if (this.readyState == 4 && this.status == 200) {
+                        var obj = JSON.parse(this.responseText);
+                        resultado.innerHTML = obj; //Update resultado span with responseText from server 
+                        console.log(this.responseText);
+                    }
+
+                };
+
+                // Open and send the request 
+                xhr.open("POST","asumar.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.send(`valorCaja1=${valor1.value}&valorCaja2=${valor2.value}`);
+
+            });
+        });  
+    </script>
+
+<body>
+
+    Introduce valor 1
+
+    <input type="text" id="valor1" value="0">
+
+
+    Introduce valor 2
+
+    <input type="text" id="valor2" value="0">
+
+    <br />
+
+    <br />
+
+    Realiza suma
+
+    <input type="button" id="calcula" value="Calcula">
+    <br />
+
+    <br />
+
+    Resultado: <span id="resultado">0</span>
+
+</body>
+
+</html>
